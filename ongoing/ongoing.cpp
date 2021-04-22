@@ -10,14 +10,29 @@ using namespace std;
  **/
 
 int main() {
-    int a, b;
-    int res;
+    int a = 0;
+    int b = 0;
+    int res = 0;
+    int cnt = 0 ;
 
-    std::cout << "a , b 를 입력하세요. " << std::endl;
     std::cin >> a ;
     std::cin >> b ;
+
     res = a + b;
     std::cout << res << std::endl;
 
+    res = a - b;
+    std::cout << res << std::endl;
+
+    res = a * b;
+    std::cout << res << std::endl;
+
+    res = a / b;
+    std::cout << res << std::endl;
+
+    res = a % b;
+    std::cout << res << std::endl;
+    
+    system("pause");
     return 0;
 }
