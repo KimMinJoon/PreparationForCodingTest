@@ -1,26 +1,10 @@
-#include <iostream>
-#include <vector>
+
 #include <string>
-#include <map>
+#include <vector>
 #include <algorithm>
+#include <map>
 
 using namespace std;
-
-// string solution(vector<string> participant, vector<string> completion);
-bool solution(vector<string> phone_book);
-
-int main() {
-    bool isExist;
-
-    vector<string> phone_book = {"123","456","789"};
-
-    isExist = solution(phone_book);
-
-    std::cout << "answer :" << isExist << std::endl;
-
-    system("pause");
-    return 0;
-}
 
 bool solution(vector<string> phone_book) {
     bool answer = true;
@@ -32,24 +16,27 @@ bool solution(vector<string> phone_book) {
      * 
      *
      */
-    // map<string, int> m;
+    map<string, int> m;
 
     sort(phone_book.begin(), phone_book.end());
+    
+    for (auto pb : phone_book) {
+        // m[pb] += pb.length();
 
-    for (int i = 0; i < phone_book.size(); i++) {
-        for (size_t j = i+1; j < phone_book.size(); j++) {
-            
-            if (phone_book[i].find(phone_book[j])) {
-                return false;
-            }
-        }
     }
 
+    for (int i = 0; i < phone_book.size(); i++) {
+        for (auto ph : phone_book) {
+            if (phone_book[i].compare(ph) < 0) {
+                return true;
+            }
+        }
+        
+    }
+
+
+    
+    
+    
     return answer;
 }
-
-
-
-
-
-
