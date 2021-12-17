@@ -1,30 +1,9 @@
-#include <iostream>
-#include <vector>
 #include <string>
-#include <map>
+#include <vector>
 #include <algorithm>
+#include <map>
 
 using namespace std;
-
-string solution(vector<string> participant, vector<string> completion);
-
-int main() {
-
-    string answer = "";
-    // 1. ["leo", "kiki", "eden"], ["eden", "kiki"]
-    // 2. ["marina", "josipa", "nikola", "vinko", "filipa"], ["josipa", "filipa", "marina", "nikola"]
-    vector<string> participant = {"marina", "josipa", "nikola", "vinko", "filipa"};
-    vector<string> completion= {"filipa", "marina", "vinko","nikola"};
-
-    answer.assign(solution(participant, completion));
-
-    std::cout << "answer :" << answer << endl;
-
-    system("pause");
-    return 0;
-}
-
-
 
 
 // https://programmers.co.kr/learn/courses/30/lessons/42576
@@ -90,11 +69,4 @@ string solution(vector<string> participant, vector<string> completion) {
             return participant[i];
         }
     }
-    
-
-    
-
-    // answer.assign(participant[0]);
-    // return answer;
 }
-
