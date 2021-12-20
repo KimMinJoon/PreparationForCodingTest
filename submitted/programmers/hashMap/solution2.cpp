@@ -1,45 +1,77 @@
-
-#include <string>
+#include <iostream>
 #include <vector>
-#include <algorithm>
+#include <string>
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
 // https://programmers.co.kr/learn/courses/30/lessons/42577
 
+// string solution(vector<string> participant, vector<string> completion);
+bool solution(vector<string> phone_book);
+void print_vector(vector<string> &v);
+
+int main() {
+    bool isExist;
+
+    vector<string> phone_book = {"456","123","789", "12344"};
+
+    isExist = solution(phone_book);
+
+    std::cout << "answer :" << isExist << std::endl;
+
+    system("pause");
+    return 0;
+}
+
 bool solution(vector<string> phone_book) {
     bool answer = true;
     
     /**
-     * 방법 1 : 전화번호의 길이가 짧은 원소로 포함된 문자열이 있는지 탐색하여 존재한다면, false를 반환하도록한다. 
+     * 방법 : 전화번호의 길이가 짧은 원소로 포함된 문자열이 있는지 탐색하여 존재한다면, false를 반환하도록한다. 
      *      1. 정렬하여 길이가 짧은 순으로 나열한다. 
      *      2. 자기 자신부터 뒤의 원소들만과 문자열이 포함되었는확인한다. 
-     * 결과 :
-     *      통과했지만 효율성테스트에서 통과하지 못함. 
-     * 
-     * 효율성 개선 방법 :
-     *      
      */
 
-    // 정렬 효율성 문제 1
-    
-    sort(phone_book.begin(), phone_book.end());
-
-
-    // 이중 포문 효율성 문제 2
-    for (int i = 0; i < phone_book.size(); i++) {
-        for (size_t j = i+1; j < phone_book.size(); j++) {
+    // for (int i = 0; i < phone_book.size(); i++) {
+    //     for (size_t j = i+1; j < phone_book.size(); j++) {
             
-            // 문자열 포함 여부 확인 
-            if (phone_book[j].find(phone_book[i], 0) == 0) {
-                return false;
-            }
+    //         // 문자열 포함 여부 확인 
+    //         if (phone_book[j].find(phone_book[i], 0) == 0) {
+    //             return false;
+    //         }
+    //     }
+    // }
+
+    
+    // print_vector(phone_book);
+    sort(phone_book.begin(), phone_book.end());
+    // print_vector(phone_book);
+
+    // 이중 for문을 개선해야함
+    // sort 함수로 사전 순의 나열이 된것을 간과하였음. 
+    // 길면 길수록 뒤에 배치될거라고 착각함. 그래서 for문으로 모든 원소와 비교하여 탐색하도록 하였음.... 
+
+    for (size_t i = 0; i < phone_book.size()-1; i++) {
+        // 문자열 포함 여부 확인 
+        if (phone_book[i+1].find(phone_book[i], 0) == 0) {
+            return false;
         }
     }
-
-    
-    
-    
     return answer;
 }
+
+void print_vector(vector<string> &v) {
+    std::cout << "------- vector print  " << std::endl; 
+    for (auto str : v) {
+        std::cout << str << std::endl;
+    }
+    std::cout << std::endl;
+}
+
+
+
+
+
+
