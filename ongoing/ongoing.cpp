@@ -8,60 +8,65 @@ using namespace std;
 
 // https://programmers.co.kr/learn/courses/30/lessons/42577
 
-// string solution(vector<string> participant, vector<string> completion);
-bool solution(vector<string> phone_book);
+int solution(vector<vector<string>> clothes);
+
 void print_vector(vector<string> &v);
 
 int main() {
-    bool isExist;
+    int answer;
+    // [["crowmask", "face"], ["bluesunglasses", "face"], ["smoky_makeup", "face"]]
+    vector<vector<string>> clothes = {{"yellowhat", "headgear"}, {"bluesunglasses", "eyewear"}, {"green_turban", "headgear"}};
 
-    vector<string> phone_book = {"456","123","789", "12344"};
+    answer = solution(clothes);
 
-    isExist = solution(phone_book);
-
-    std::cout << "answer :" << isExist << std::endl;
+    std::cout << "answer :" << answer << std::endl;
 
     system("pause");
     return 0;
 }
 
-bool solution(vector<string> phone_book) {
-    bool answer = true;
+int solution(vector<vector<string>> clothes) {
+    int answer = 0;
     
     /**
-     * 방법 : 전화번호의 길이가 짧은 원소로 포함된 문자열이 있는지 탐색하여 존재한다면, false를 반환하도록한다. 
-     *      1. 정렬하여 길이가 짧은 순으로 나열한다. 
-     *      2. 자기 자신부터 뒤의 원소들만과 문자열이 포함되었는확인한다. 
+     *   방법 : 
+     *      의상의 종류 당 한가지만 입을 수 있지만 의상의 종류가 다른 것들의 조합은 다양하게 입을 수 있다. 
+     *      
+     *      1. 각각의 의상의 종류들 마다 하나 씩 착용햇을 경우 
+     * 
+     *      2. 다른 의상의 종류들의 조합의 경우 
+     * 
+     *      3. 이를 총합을 구하여 리턴한다.
+     * 
      */
-
-
     
-    print_vector(phone_book);
-    sort(phone_book.begin(), phone_book.end());
-    print_vector(phone_book);
 
-    // 이중 for문을 개선해야함....
-    for (size_t i = 0; i < phone_book.size()-1; i++) {
-        // 문자열 포함 여부 확인 
-            if (phone_book[i+1].find(phone_book[i], 0) == 0) {
-                return false;
-            }
+    map<string, int> m; // 옷의 종류와 해당 옷의 종류의 개수를 위한 맵 변수
+
+    for (size_t i = 0; i < clothes.size(); i++) {
+        for (auto clo : clothes[i]) {
+            m[clo] += 1;
+        }
+    }
+
+    int sum = 0;
+
+    for (size_t i = 0; i < m.size(); i++)
+    {
+        sum += m[i];
+    }
+
+    for (size_t i = 0; i < m.size(); i++)
+    {
+        sum += m[i]
+        sdfadfs
     }
     
-    
 
-    // for (int i = 0; i < phone_book.size(); i++) {
-    //     for (size_t j = i+1; j < phone_book.size(); j++) {
-            
-    //         // 문자열 포함 여부 확인 
-    //         if (phone_book[j].find(phone_book[i], 0) == 0) {
-    //             return false;
-    //         }
-    //     }
-    // }
-
+    sdfsdf
     return answer;
 }
+
 
 void print_vector(vector<string> &v) {
     std::cout << "------- vector print  " << std::endl; 
