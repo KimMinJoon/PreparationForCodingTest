@@ -39,9 +39,10 @@ int solution(vector<vector<string>> clothes) {
      *      3. 이를 총합을 구하여 리턴한다.
      * 
      */
-    
 
     map<string, int> m; // 옷의 종류와 해당 옷의 종류의 개수를 위한 맵 변수
+
+    map<string,int>::iterator iter;
 
     for (size_t i = 0; i < clothes.size(); i++) {
         for (auto clo : clothes[i]) {
@@ -51,19 +52,16 @@ int solution(vector<vector<string>> clothes) {
 
     int sum = 0;
 
-    for (size_t i = 0; i < m.size(); i++)
+    std::cout << "map : " << std::endl;
+
+
+    for (size_t i = 0; i < clothes.size(); i++)
     {
-        sum += m[i];
+        sum += m[];
     }
 
-    for (size_t i = 0; i < m.size(); i++)
-    {
-        sum += m[i]
-        sdfadfs
-    }
     
-
-    sdfsdf
+    
     return answer;
 }
 
