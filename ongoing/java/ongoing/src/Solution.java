@@ -2,6 +2,7 @@ package ongoing.java.ongoing.src;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 class Solution {
@@ -60,7 +61,31 @@ class Solution {
             genreSet.add(str);      // 중복제거
         }
 
-        for( ) {
+        // 2. 장르와 횟수를 고유번호순서로 hashMap 몰아서 저장 
+        HashMap<String, Integer> genrePlay = new HashMap<>();
+        for (int i = 0; i < genres.length; i++) {
+            genrePlay.put(genres[i], plays[i]);
+        }
+
+        // 각 장르별로 for문 조회
+        for(String genre : genreSet) {
+            
+            if (genrePlay.containsKey(genre)) {
+
+            }
+            
+        }
+
+       
+        HashMap<String, Integer> top2TempList = new HashMap<>();
+
+        
+
+        // 인덱스가 고유번호이기때문에 임시로 저장하여 활용한다. 
+        
+        
+
+        for(  ) {
 
         }
 
