@@ -21,6 +21,6 @@ windows 와 vsCode에서 c++ 컴파일을 위한 절차
 2. make 컴파일러 설치 
 3. makefile 생성
 
-
+5. 익숙한 JAVA로 코테를 준비한다.
 
 
