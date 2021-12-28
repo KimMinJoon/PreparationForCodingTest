@@ -40,5 +40,6 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "map": "cpp"
-    }
+    },
+    "files.autoGuessEncoding": true
 }

@@ -18,6 +18,9 @@ public class App {
         int[] plays = {500, 600, 150, 800, 2500};
         answer = sol.solution2(genres, plays);
 
-        System.out.println("return : " + answer);
+        for(int id : answer) {
+            System.out.println("return  id : " + id);
+        }
+        // System.out.println("return : " + answer);
     }
 }
