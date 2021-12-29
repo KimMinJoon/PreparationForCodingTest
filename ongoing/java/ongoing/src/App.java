@@ -3,20 +3,17 @@ package ongoing.java.ongoing.src;
 public class App {
     public static void main(String[] args) throws Exception {
         Solution sol = new Solution(); 
-
         
         int[] answer;
 
-        // int answer;
-        // String[][] clothes = {{"yellowhat", "headgear"}, {"bluesunglasses", "eyewear"}, {"green_turban", "headgear"}};
-        // String[][] clothes = {{"crowmask", "face"}, {"bluesunglasses", "face"}, {"smoky_makeup", "face"}};
-        // answer = sol.solution1(clothes);
 
+        // [93, 30, 55]	[1, 30, 5]	[2, 1]
+        // [95, 90, 99, 99, 80, 99]	[1, 1, 1, 1, 1, 1]	[1, 3, 2]
 
-        // ["classic", "pop", "classic", "classic", "pop"]	[500, 600, 150, 800, 2500]	
-        String[] genres = {"classic", "pop", "classic", "classic", "pop"};
-        int[] plays = {500, 600, 150, 800, 2500};
-        answer = sol.solution2(genres, plays);
+        int[] progresses = {95, 90, 99, 99, 80, 99};
+        int[] speeds = {1, 1, 1, 1, 1, 1};
+        
+        answer = sol.solution(progresses, speeds);
 
         for(int id : answer) {
             System.out.println("return  id : " + id);
