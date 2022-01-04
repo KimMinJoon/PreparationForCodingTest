@@ -4,20 +4,20 @@ public class App {
     public static void main(String[] args) throws Exception {
         Solution sol = new Solution(); 
         
-        int[] answer;
+        int[] answer1;
+        int answer;
 
+        // [2, 1, 3, 2]
+        // [1, 1, 9, 1, 1, 1]	
 
-        // [93, 30, 55]	[1, 30, 5]	[2, 1]
-        // [95, 90, 99, 99, 80, 99]	[1, 1, 1, 1, 1, 1]	[1, 3, 2]
-
-        int[] progresses = {95, 90, 99, 99, 80, 99};
-        int[] speeds = {1, 1, 1, 1, 1, 1};
+        int[] priorities = {1, 1, 9, 1, 1, 1};
+        int location = 2;
         
-        answer = sol.solution(progresses, speeds);
+        answer = sol.solution(priorities, location);
 
-        for(int id : answer) {
-            System.out.println("return  id : " + id);
-        }
-        // System.out.println("return : " + answer);
+        // for(int id : answer) {
+        //     System.out.println("return  id : " + id);
+        // }
+        System.out.println("return : " + answer);
     }
 }

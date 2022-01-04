@@ -1,157 +1,109 @@
 package ongoing.java.ongoing.src;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 class Solution {
 
     /*************************   진행 중인 Programmers 문제   ***************************/
-
     /**
-     * 스택/큐 - "기능개발"
-     *  https://programmers.co.kr/learn/courses/30/lessons/42586
+     * 스택 / 큐 - "프린터"
+     * https://programmers.co.kr/learn/courses/30/lessons/42587
      * 
-     * @param clothes
-     * @return int
+     * 
+     * @param priorities 
+     * @param location
+     * @return int  
      */
 
+     // 도전 중~
+     public int solution(int[] priorities, int location) {
+        int answer = 0;
 
-    public int[] solution(int[] progresses, int[] speeds) {
-       
+        // 프린터의 고유 기능 
+        // 큐로 저장이 되어있는 대기목록 
+        // 우선순위 탐색 후 큐에 다시 삽입 
+        
+        // 1. 큐를 활용하여 알고리즘을 설계한다. 
+        Queue<Task> q = new LinkedList<>();
 
-        // 1. 문제 2번 읽기 
 
-        class Task {
-            int progress;
-            int speed;
-            int day;
 
-            public Task(int progress, int speed, int day){
-                this.progress = progress;
-                this.speed = speed;
-                this.day = day;
-            }
+        // 2. Task class 에 우선순위와 위치를 저장한다.
+        // 입력된 location과 큐를 돌면서 기존의 위치와 비교해야되기때문에?
+
+        ArrayList<Integer> prio_list = new ArrayList<>();
+
+        for(int i = 0; i < priorities.length; i++){
+            Task task = new Task();
+            task.location = i;
+            task.priority = priorities[i];
+            prio_list.add(task.priority);
+            q.offer(task);
         }
-
-        // 2. 각각의 프로그래스의 소요 일자를 구한다. 
         
-        List<Task> taskDtoList = new ArrayList<>();
-        
-        int[] days = new int[progresses.length];
-
-        for(int i = 0; i < progresses.length; i++) {
-
-            // (int) Math.ceil(remain); 나머지 발생시 올림처리로 대체가능.
-            int day = (100 - progresses[i] ) / speeds[i];           // 이 부분이 날짜를 구하긴하지만 
-                                                                    // 나눈 몫의 나머지까지 +1을 더하지 않음..
-                                                                    
-            // while 문을 활용하여 날짜가 초과됨을 테스트하여 누적되게끔한다면 다른 조건에도 
-            // 활용할 수 있었다. 
-
-            // 굳이 해당 과정과 처리속도 에 따른 소요되는 일수를 구하여 저장할 필요가 없었다.
-
-
-            days[i] = day;
-            taskDtoList.add(new Task(progresses[i], speeds[i], day));
-        }
-
-
-        int submitCnt = 1;
-        int compareDay = 0;
-        ArrayList<Integer> answerList = new ArrayList<>();
-            // 0 7 4 9 
-        
-        for(int i = 0; i < taskDtoList.size(); i++){
-            if(taskDtoList.get(i).day > compareDay) {     // 9 > 7
-
-                if(compareDay != 0){
-                    answerList.add(submitCnt);
+        prio_list.sort(Comparator.reverseOrder());
+        int cnt = 1;                                // 프린트 순서의 첫번째는 1부터 시작.
+        while (!q.isEmpty()) {
+            for (Integer high_prio: prio_list) {         // 높은 순위부터 3 부터 -> 1까지 
+                Task temp_task = q.poll();                  // 큐에서 빼고 삭제 
+                
+                if (temp_task.priority < high_prio) {       // 다시 큐에 넣기
+                    q.offer(temp_task);
+                } else {                                    // 큐에서 제거하면서 cnt 증가
+                    if (location == temp_task.location) {
+                        answer = cnt;
+                    }
+                    cnt++ ;
                 }
-
-                compareDay = taskDtoList.get(i).day;      // 0 = 7 
-                submitCnt = 1;
-
-            } else {
-                submitCnt++;
-            }
-
-            if(taskDtoList.size()-1 == i){
-                answerList.add(submitCnt);
             }
         }
 
-        int[] answer = new int[answerList.size()];
-        for(int i = 0; i < answer.length; i++) {
-            answer[i] = answerList.get(i);
-        }
+        
+
+        // [2, 1, 3, 2] -> 2 -> return 1
+
+        // 1. for문 돌면서 큐로 우선순위가 높은거 먼저 peek
+        // 2. for문의 index가 초기화? 되니까 
+
+
+        // 3. 큐를 돌면서 해당 location과 같으면 cnt 값을 리턴한다. 
+
 
         return answer;
     }
 
+    static class Task{
+        private int priority;
+        private int location;
+        private int order;
 
+        public int getPriority() {
+            return this.priority;
+        }
 
+        public void setPriority(int priority) {
+            this.priority = priority;
+        }
 
+        public int getLocation() {
+            return this.location;
+        }
 
+        public void setLocation(int location) {
+            this.location = location;
+        }
 
-    //// 정답 
-    // https://techhan.github.io/algorithm/programmers-55/
-    public int[] solution2(int[] progresses, int[] speeds) {
-        int[] dayOfend = new int[100];          // int 형 배열 선언 
-
-        int day = -1;           // 굳이?
-
-        // [93, 30, 55]	[1, 30, 5]	[2, 1]
-
-
-        for(int i=0; i<progresses.length; i++) {        // 93, 30, 55 만큼 반복
-
-            while(progresses[i] + (day*speeds[i]) < 100) {      // 소요일자를 구하고 반복종료
-                day++;          // 0 -> ... -> 7
-            }
-
-            dayOfend[day]++;            // [7] 번째 인덱스에 1 올라감
+        public int getOrder() {
+            return this.order;
         }
         
-        return Arrays.stream(dayOfend).filter(i -> i!=0).toArray();
-        // 
-    }
-
-    // 큐를 이용한 풀이
-    public int[] solution3(int[] progresses, int[] speeds) {
-
-        Queue<Integer> q = new LinkedList<>();      // 큐을 활용한 링크드 리스트 선언 .
-
-        List<Integer> answerList = new ArrayList<>();
-
-        for (int i = 0; i < speeds.length; i++) {
-
-            double remain = (100 - progresses[i]) / (double) speeds[i];
-
-            int date = (int) Math.ceil(remain);         // i번째 소요되는 일수를 구함. 7일
-
-            if (!q.isEmpty() && q.peek() < date) {      // 7 < 3 , 7 < 9
-                answerList.add(q.size());                   // 7, 3 이 큐에 있기때문에 2가 저장
-                q.clear();                                  // 비우기 
-            }
-
-            q.offer(date);                      // 첫번째 요소에 7일 저장 -> 3 저장 -> 비워지고 9가 저장(첫번째인덱스임)
+        public void setOrder(int order) {
+            this.order = order;
         }
-
-        answerList.add(q.size());               // 마지막에 다돌고 큐에 남은거 추가해주기 
-
-        int[] answer = new int[answerList.size()];
-
-        for (int i = 0; i < answer.length; i++) {
-            answer[i] = answerList.get(i);
-        }
-
-        return answer;
     }
-
 
 
     /***************************************************************************/
