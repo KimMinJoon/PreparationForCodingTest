@@ -11,7 +11,7 @@ public class App {
         // [1, 1, 9, 1, 1, 1]	
 
         int[] priorities = {1, 1, 9, 1, 1, 1};
-        int location = 2;
+        int location = 1;
         
         answer = sol.solution(priorities, location);
 

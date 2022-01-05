@@ -45,20 +45,46 @@ class Solution {
         }
         
         prio_list.sort(Comparator.reverseOrder());
-        int cnt = 1;                                // 프린트 순서의 첫번째는 1부터 시작.
-        while (!q.isEmpty()) {
-            for (Integer high_prio: prio_list) {         // 높은 순위부터 3 부터 -> 1까지 
-                Task temp_task = q.poll();                  // 큐에서 빼고 삭제 
-                
-                if (temp_task.priority < high_prio) {       // 다시 큐에 넣기
-                    q.offer(temp_task);
-                } else {                                    // 큐에서 제거하면서 cnt 증가
-                    if (location == temp_task.location) {
-                        answer = cnt;
-                    }
-                    cnt++ ;
-                }
+
+        //중복 제거 
+        ArrayList<Integer> prioListSet = new ArrayList<>();
+        
+        for (int i = 0; i < prio_list.size()-1; i++) {
+            if(!prioListSet.contains(prio_list.get(i))){
+                prioListSet.add(prio_list.get(i));
             }
+        }
+        
+        System.out.println("prio_list.size() :::: " + prio_list.size());
+        System.out.println("prioListSet :::: " + prioListSet.size());
+
+        int cnt = 1;                                // 프린트 순서의 첫번째는 1부터 시작.
+        int temp_prio = 0;
+        int idx = 0;
+        while (!q.isEmpty()) {
+            
+            Task temp_task = q.poll();                  // 큐에서 빼고 삭제 
+
+            
+
+            if (temp_task.priority < prioListSet.get(idx)) {       // 다시 큐에 넣기     
+                q.offer(temp_task);
+
+            } else {                                    // 큐에서 제거하면서 cnt 증가
+
+                if(temp_prio != temp_task.priority){
+                    temp_prio = temp_task.priority;
+                    idx++;
+                }
+                
+                if (location == temp_task.location) {
+                    answer = cnt;
+                    break;
+                }
+                cnt++ ;                         // 이거 카운트 될 때 중복되는 우선순위들 
+            }
+
+            
         }
 
         
@@ -74,6 +100,12 @@ class Solution {
 
         return answer;
     }
+
+    // 다시 reset 도전 해보자 
+    // public int solution2(int[] priorities, int location) {
+
+
+    // }
 
     static class Task{
         private int priority;
