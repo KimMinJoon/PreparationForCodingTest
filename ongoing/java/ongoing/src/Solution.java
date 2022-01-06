@@ -18,99 +18,60 @@ class Solution {
      * @return int  
      */
 
-     // 도전 중~
-     public int solution(int[] priorities, int location) {
+     
+    // 다시 reset 도전 해보자 
+    public int solution(int[] priorities, int location) {
         int answer = 0;
 
-        // 프린터의 고유 기능 
-        // 큐로 저장이 되어있는 대기목록 
-        // 우선순위 탐색 후 큐에 다시 삽입 
+        // 1. 현재 priorities 의 배열 index가 현재 location 이기 때문에, 
+        //    우선순위와 위치를 함께 저정하여 기존의 입력된 location을 탐색해야한다.
+        // 1-2. task 클래스 생성
         
-        // 1. 큐를 활용하여 알고리즘을 설계한다. 
-        Queue<Task> q = new LinkedList<>();
+        ArrayList<Integer> prio_order_by = new ArrayList<>();
 
+        Queue<Task> taskQueue = new LinkedList<>();
 
-
-        // 2. Task class 에 우선순위와 위치를 저장한다.
-        // 입력된 location과 큐를 돌면서 기존의 위치와 비교해야되기때문에?
-
-        ArrayList<Integer> prio_list = new ArrayList<>();
-
-        for(int i = 0; i < priorities.length; i++){
+        // 2. priority값과 location값을 가진 task를 taskList 큐에 담는다. 
+        for (int i = 0; i < priorities.length; i++) {
             Task task = new Task();
             task.location = i;
             task.priority = priorities[i];
-            prio_list.add(task.priority);
-            q.offer(task);
+            prio_order_by.add(priorities[i]);
+            taskQueue.add(task);
         }
-        
-        prio_list.sort(Comparator.reverseOrder());
 
-        //중복 제거 
-        ArrayList<Integer> prioListSet = new ArrayList<>();
-        
-        for (int i = 0; i < prio_list.size()-1; i++) {
-            if(!prioListSet.contains(prio_list.get(i))){
-                prioListSet.add(prio_list.get(i));
-            }
-        }
-        
-        System.out.println("prio_list.size() :::: " + prio_list.size());
-        System.out.println("prioListSet :::: " + prioListSet.size());
+        // 3. priorities 배열의 우선순위 순으로 모두 나열한다. (중복제거하지않아야함)
+        prio_order_by.sort(Comparator.reverseOrder());
 
-        int cnt = 1;                                // 프린트 순서의 첫번째는 1부터 시작.
-        int temp_prio = 0;
+        
+
+        // 4. taskList 큐를 돌면서 조건에 우선순위가 가장 높은지 탐색하여 찾으면 제거(프린팅 확정이기에 cnt를 증가)
+        //    하고 아니면 큐에 재등록한다. 
         int idx = 0;
-        while (!q.isEmpty()) {
-            
-            Task temp_task = q.poll();                  // 큐에서 빼고 삭제 
-
-            
-
-            if (temp_task.priority < prioListSet.get(idx)) {       // 다시 큐에 넣기     
-                q.offer(temp_task);
-
-            } else {                                    // 큐에서 제거하면서 cnt 증가
-
-                if(temp_prio != temp_task.priority){
-                    temp_prio = temp_task.priority;
-                    idx++;
-                }
-                
-                if (location == temp_task.location) {
-                    answer = cnt;
+        while (!taskQueue.isEmpty()) {
+            Task temp = taskQueue.poll();
+            if (temp.priority != prio_order_by.get(idx)) {
+                taskQueue.offer(temp);               
+            } else {
+                answer++;
+                idx++;
+                if (location == temp.location) {
                     break;
                 }
-                cnt++ ;                         // 이거 카운트 될 때 중복되는 우선순위들 
             }
-
-            
         }
 
-        
 
-        // [2, 1, 3, 2] -> 2 -> return 1
-
-        // 1. for문 돌면서 큐로 우선순위가 높은거 먼저 peek
-        // 2. for문의 index가 초기화? 되니까 
-
-
-        // 3. 큐를 돌면서 해당 location과 같으면 cnt 값을 리턴한다. 
+        // 5. 제거 될 때, 입력된 location과 동일한지 확인하여 동일하다면 해당 cnt를 반환
 
 
         return answer;
     }
 
-    // 다시 reset 도전 해보자 
-    // public int solution2(int[] priorities, int location) {
-
-
-    // }
-
     static class Task{
         private int priority;
         private int location;
-        private int order;
+        // private int order;
 
         public int getPriority() {
             return this.priority;
@@ -126,14 +87,6 @@ class Solution {
 
         public void setLocation(int location) {
             this.location = location;
-        }
-
-        public int getOrder() {
-            return this.order;
-        }
-        
-        public void setOrder(int order) {
-            this.order = order;
         }
     }
 
