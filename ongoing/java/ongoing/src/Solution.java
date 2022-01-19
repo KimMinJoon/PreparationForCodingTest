@@ -2,6 +2,7 @@ package ongoing.java.ongoing.src;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -19,53 +20,47 @@ class Solution {
      * @return
      */
 
+    // 음 다리를 큐라고 생각하고 조건에 안맞을때 0을 넣고 초를 늘리는 생각까지는 좋았다.
+    // 근데 다리에 진입하고자하는 트럭배열을 포문으로 반복해서 도는게 맞긴했는데 
+    // 초를 셀 때, while로 감싸서 큐에서 밀어내기를 해야한다는 생각을 하지 못함.
+    // 왤까?
+    // 반복문을 안쓰려고했던것같음. 
+    // 왜? 시도를 중지하지 않았으면 좋았을것. 사고방식을 폐쇄하면 안좋고 열자 해보고 2중 3중 4중까지 사고를 열어는 놔야할듯
+    // 그리고 수행시간 초과되면 그때가서 개선하는게 맞다봄.
+    // 너무 한꺼번에 끝내려고 하다가 고립된듯.
 
+    // for문 내에서 큐 사이즈를 빼고 더하려고햇는데 일단 여기서 막혔으면 while로  감싼다는 생각을 했어야함. 
+    
     public int solution(int bridge_length, int weight, int[] truck_weights) {
         int answer = 0;
 
-        // 1. 큐에 트럭 무게 순서대로 넣는다.
-        Queue<Integer> trucks = new LinkedList<>();
+
+        int seconds = 0 ;
+        int sumWeight = 0;
         Queue<Integer> bridge = new LinkedList<>();
-        int sum_weight = 0;
-
+        
+        
         for (int i = 0; i < truck_weights.length; i++) {
-            trucks.add(truck_weights[i]);
-        }
-
-        int truck_in_brige = trucks.poll();
-        int bridg_size = 0;
-        
-        while (!trucks.isEmpty()) {
-            
-
-            // 브리지 큐에 넣기 
-            if (bridg_size < bridge_length) {
-                if (sum_weight + truck_in_brige < weight) {  
-                    bridge.add(truck_in_brige);
-                    sum_weight += truck_in_brige;
-                    answer++;
+            // 7, 4, 5, 6
+            if (bridge.size() < bridge_length) {
+                if (sumWeight + truck_weights[i]< weight) {
+                    bridge.add(truck_weights[i]);
+                    sumWeight += truck_weights[i];
+                    seconds++;
                 } else {
-                    bridg_size++;
-                    answer++;
+                    bridge.add(0);
+                    seconds++;
                 }
+
             } else {
-                bridge.poll();
-                answer++;
-
+                int outTruck = bridge.poll();
+                if (outTruck != 0) {
+                    sumWeight -= outTruck;
+                    seconds++;
+                }
             }
-
         }
-
        
-        
-        // 2. 큐에 삽입할 때, 무게 조건에 맞지않을때 0을 큐에 넣는다. 
-
-        // 3. 큐에서 꺼내 큐에 꺼낼때마다 카운팅을 한다. 
-
-        // 4. 큐가 비었을때 카운팅한 수를 리턴한다.
-
-
-
         
 
         return answer;
