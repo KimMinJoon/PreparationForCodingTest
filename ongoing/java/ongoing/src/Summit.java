@@ -56,12 +56,10 @@ class Summit {
      * @return int
      */
 
-     // 도전 중~
-     public int[] solution2(String[] genres, int[] plays) {
-        
+     // 내 정답지
+    public int[] solution2(String[] genres, int[] plays) {
         
         // 1. 문제 정독 2번 확인
-        // 읽음~
 
         // 2. 장르 / 재생횟수 / 고유번호를 DTO에 저장
         class MusicInfo {
@@ -160,6 +158,7 @@ class Summit {
         }
         
         return answer;
+
     }
 
     ///////////////////////////////// 정답지 ^^;;
@@ -220,7 +219,7 @@ class Summit {
                 }
                 Collections.sort(list, (o1, o2) -> o2.play - o1.play); // 내림차순 소팅
                 result.add(list.get(0)); 	// 1개는 무조건 수록
-                if(list.size()!=1){ 	// 더 수록할 곡이 있으면(==장르 내의 노래가 1개보다 많으면) 수록
+                if(list.size()!=1){ 	            // 더 수록할 곡이 있으면(==장르 내의 노래가 1개보다 많으면) 수록
                     result.add(list.get(1));
                 }
             }
