@@ -134,7 +134,7 @@ class Summit {
             if(second_id == -1) {
                 answerLIst.add(first_id);
             } else {
-                if(first_value == second_value){
+                if(first_value != second_value){
                     if(first_id > second_id) {
                         answerLIst.add(second_id);
                         answerLIst.add(first_id);
@@ -142,7 +142,7 @@ class Summit {
                         answerLIst.add(first_id);
                         answerLIst.add(second_id);
                     }
-                } else{
+                } else {
                     answerLIst.add(first_id);
                     answerLIst.add(second_id);
                 }

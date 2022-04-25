@@ -39,28 +39,43 @@ class Solution {
         int sumWeight = 0;
         Queue<Integer> bridge = new LinkedList<>();
         
-        
-        for (int i = 0; i < truck_weights.length; i++) {
-            // 7, 4, 5, 6
-            if (bridge.size() < bridge_length) {
-                if (sumWeight + truck_weights[i]< weight) {
-                    bridge.add(truck_weights[i]);
-                    sumWeight += truck_weights[i];
-                    seconds++;
-                } else {
-                    bridge.add(0);
-                    seconds++;
-                }
 
-            } else {
-                int outTruck = bridge.poll();
-                if (outTruck != 0) {
-                    sumWeight -= outTruck;
-                    seconds++;
+        // 트럭 IN  / 트럭 OUT / 트럭 MOVE 이 3가지가 동시에 1초에 진행되어야함.  
+        // 트럭 1개가 무게가 많이 나가서 다리를 오랫동안 점유할 경우 카운팅이 여러번 되어야하기때문에 while문 활용
+        
+        while(1) {
+
+            for (int i = 0; i < truck_weights.length; i++) {
+                // 7, 4, 5, 6
+    
+                // 다리 입장 가능 차량 수 확인조건
+                if (bridge.size() < bridge_length) {
+    
+                    // 다리 입장 가능 총 중량 확인 조건
+                    if (sumWeight + truck_weights[i]< weight) {
+    
+                        bridge.add(truck_weights[i]);
+    
+                        sumWeight += truck_weights[i];
+                        seconds++;
+                    } else {
+                        bridge.add(0);      // 중량 초과로 0인 무게의 트럭을 큐에 추가.???
+                    }
+    
+                } else {
+                    int outTruck = bridge.poll();
+                    if (outTruck != 0) {
+                        sumWeight -= outTruck;
+                        seconds++;
+                    }
                 }
             }
+
         }
+        
+        
        
+        
         
 
         return answer;
