@@ -20,23 +20,42 @@ class Solution {
      * @return
      */
 
-    // 음 다리를 큐라고 생각하고 조건에 안맞을때 0을 넣고 초를 늘리는 생각까지는 좋았다.
-    // 근데 다리에 진입하고자하는 트럭배열을 포문으로 반복해서 도는게 맞긴했는데 
-    // 초를 셀 때, while로 감싸서 큐에서 밀어내기를 해야한다는 생각을 하지 못함.
-    // 왤까?
-    // 반복문을 안쓰려고했던것같음. 
-    // 왜? 시도를 중지하지 않았으면 좋았을것. 사고방식을 폐쇄하면 안좋고 열자 해보고 2중 3중 4중까지 사고를 열어는 놔야할듯
-    // 그리고 수행시간 초과되면 그때가서 개선하는게 맞다봄.
-    // 너무 한꺼번에 끝내려고 하다가 고립된듯.
+    // 1. for문으로 트럭 대기로 감싼다. 
+    // 2. 그다음 while true로 감싸고 
+    // 3. time ++ 로 시간을 각 부분에서 증가시킨다. 
+    // 4. 마지막에 마지막 트럭 다리에 올라타고 다리 트럭 가능 수 만큼 더해주고 리턴한다. 
 
-    // for문 내에서 큐 사이즈를 빼고 더하려고햇는데 일단 여기서 막혔으면 while로  감싼다는 생각을 했어야함. 
-    
+    // 2트
+    public int solution2(int bridge_length, int weight, int[] truck_weights) {
+        int answer = 0;
+        int seconds = 0 ;
+        int sumWeight = 0;
+
+        boolean bridgePassedFlag = true;
+
+        Queue<Integer> waitTruck = new LinkedList<>();
+       
+
+        // 대기 큐에 입력
+        for (int i = 0; i < truck_weights.length; i++) {
+            waitTruck.add(truck_weights[i]);
+        }
+        
+
+        
+
+        return answer;
+    }
+
+
+    // 1트
     public int solution(int bridge_length, int weight, int[] truck_weights) {
         int answer = 0;
 
 
         int seconds = 0 ;
         int sumWeight = 0;
+        boolean bridgePassedFlag = true;
 
         Queue<Integer> waitTruck = new LinkedList<>();
         Queue<Integer> bridge = new LinkedList<>();
@@ -65,10 +84,16 @@ class Solution {
 
                     sumWeight += enterTruck;
                 } else {
-                    // 지금은 다리에 무게가 꽉찬상태다. 
+                    // 지금은 다리에 무게가 꽉 찬상태다. 
                     // 무게가 7인 트럭 1개가 2칸의 다리를 건너야한다. 
                     // 다리에서 내리기직전의 시간까지 구한다.
-                    seconds += bridge_length-bridge.size();
+
+                     
+                    if(bridgePassedFlag) {
+                        seconds += bridge_length-bridge.size();
+                        bridgePassedFlag = false;
+                    }
+                    
                 }
 
             } else {
